@@ -26,91 +26,89 @@
 </body>
 </html>
  -->
- <!DOCTYPE html>
-<html lang="vi">
+
+
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Biểu đồ lượt truy cập realtime</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin: 50px;
-    }
-    canvas {
-      max-width: 800px;
-      margin: auto;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITE NAME - Nom du site</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.2.2/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.2.2/modules/exporting.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #layer7, #layer4 { margin: 20px auto; max-width: 800px; }
+    </style>
 </head>
 <body>
-  <h1>Lượt truy cập realtime</h1>
-  <canvas id="visitorChart" width="800" height="400"></canvas>
+    <div id="layer7"></div>
+    <br/>
+    <div id="layer4"></div>
 
-  <script>
-    const namespace = "demo_vietcode";
-    const key = "homepage";
-    const fetchURL = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const zone = 'US';
+            const lang = 'EN';
+            const ip = '127.0.0.1';
+            const port = '80';
 
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-    const chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: 'Lượt truy cập',
-          data: [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          tension: 0.2
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'second'
-            },
-            title: {
-              display: true,
-              text: 'Thời gian'
+            const dataName = (zone === 'EU') ? ((lang === 'FR') ? "Octets" : "Bytes") : 'Bits';
+            const requestLang = (lang === 'FR') ? 'Requetes' : 'Requests';
+            const perSecondLang = (lang === 'FR') ? 'par seconde' : 'per second';
+
+            const Layer4Title = `Layer 4 ==> ${ip} PORT ${port} <==`;
+            const Layer7Title = `Layer 7 ==> ${ip} PORT ${port} <==`;
+
+            Highcharts.setOptions({
+                time: { useUTC: false }
+            });
+
+            const layer7Chart = Highcharts.chart('layer7', {
+                chart: {
+                    type: 'spline',
+                    events: { load: () => fetchData(0) }
+                },
+                title: { text: Layer7Title },
+                xAxis: { type: 'datetime', tickPixelInterval: 150, maxZoom: 20 * 1000 },
+                yAxis: {
+                    title: { text: `${requestLang} ${perSecondLang}`, margin: 80 },
+                    minPadding: 0.2,
+                    maxPadding: 0.2
+                },
+                series: [{ name: `${requestLang}/s`, data: [] }]
+            });
+
+            const layer4Chart = Highcharts.chart('layer4', {
+                chart: {
+                    type: 'spline',
+                    events: { load: () => fetchData(1) }
+                },
+                title: { text: Layer4Title },
+                xAxis: { type: 'datetime', tickPixelInterval: 150, maxZoom: 20 * 1000 },
+                yAxis: {
+                    title: { text: `${dataName} ${perSecondLang}`, margin: 80 },
+                    minPadding: 0.2,
+                    maxPadding: 0.2
+                },
+                series: [{ name: `${dataName}/s`, data: [] }]
+            });
+
+            // Mô phỏng dữ liệu real-time như layer7.php và layer4.php
+            function fetchData(type) {
+                const chart = type === 0 ? layer7Chart : layer4Chart;
+                const series = chart.series[0];
+                const now = new Date().getTime();
+                const randomY = Math.floor(Math.random() * 100); // dữ liệu giả
+
+                const shift = series.data.length > 20;
+                series.addPoint([now, randomY], true, shift);
+                setTimeout(() => fetchData(type), 1000);
             }
-          },
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Lượt truy cập'
-            }
-          }
-        }
-      }
-    });
-
-    function updateChart() {
-      fetch(fetchURL)
-        .then(res => res.json())
-        .then(data => {
-          const now = new Date();
-          chart.data.labels.push(now);
-          chart.data.datasets[0].data.push(data.value);
-
-          if (chart.data.labels.length > 20) {
-            chart.data.labels.shift();
-            chart.data.datasets[0].data.shift();
-          }
-
-          chart.update();
-        })
-        .catch(err => console.error('Lỗi khi fetch:', err));
-    }
-
-    // Cập nhật mỗi 5 giây
-    updateChart(); // lần đầu tiên
-    setInterval(updateChart, 5000);
-  </script>
+        });
+    </script>
 </body>
 </html>
+
