@@ -1,12 +1,12 @@
-<!-- ﻿<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <meta charset=utf-8 />
-<title>Mario Cre PhucPhamXuan</title>
+<title>Mario</title>
 <link href="Content/style.css" rel="stylesheet" />
 </head>
 <body>
-<a href="https://fb.com/phucpham.08"><img src="https://www.bing.com/th?id=AMMS_928a62c96ba821e882cb080907bbb897&w=110&h=110&c=7&rs=1&qlt=95&pcl=f9f9f9&o=6&cdv=1&pid=16.1" width="40" height="39.78"></a>
+<a href="https://fb.com/"><img src="https://www.bing.com/th?id=AMMS_928a62c96ba821e882cb080907bbb897&w=110&h=110&c=7&rs=1&qlt=95&pcl=f9f9f9&o=6&cdv=1&pid=16.1" width="40" height="39.78"></a>
   <a>Liên hệ hợp tác</a>
 <div id="game">
 <div id="world">
@@ -25,90 +25,9 @@
 <script src="Scripts/main.js"></script>
 </body>
 </html>
- -->
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SITE NAME - Nom du site</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.2.2/highcharts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.2.2/modules/exporting.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        #layer7, #layer4 { margin: 20px auto; max-width: 800px; }
-    </style>
-</head>
-<body>
-    <div id="layer7"></div>
-    <br/>
-    <div id="layer4"></div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const zone = 'US';
-            const lang = 'EN';
-            const ip = '127.0.0.1';
-            const port = '80';
 
-            const dataName = (zone === 'EU') ? ((lang === 'FR') ? "Octets" : "Bytes") : 'Bits';
-            const requestLang = (lang === 'FR') ? 'Requetes' : 'Requests';
-            const perSecondLang = (lang === 'FR') ? 'par seconde' : 'per second';
-
-            const Layer4Title = `Layer 4 ==> ${ip} PORT ${port} <==`;
-            const Layer7Title = `Layer 7 ==> ${ip} PORT ${port} <==`;
-
-            Highcharts.setOptions({
-                time: { useUTC: false }
-            });
-
-            const layer7Chart = Highcharts.chart('layer7', {
-                chart: {
-                    type: 'spline',
-                    events: { load: () => fetchData(0) }
-                },
-                title: { text: Layer7Title },
-                xAxis: { type: 'datetime', tickPixelInterval: 150, maxZoom: 20 * 1000 },
-                yAxis: {
-                    title: { text: `${requestLang} ${perSecondLang}`, margin: 80 },
-                    minPadding: 0.2,
-                    maxPadding: 0.2
-                },
-                series: [{ name: `${requestLang}/s`, data: [] }]
-            });
-
-            const layer4Chart = Highcharts.chart('layer4', {
-                chart: {
-                    type: 'spline',
-                    events: { load: () => fetchData(1) }
-                },
-                title: { text: Layer4Title },
-                xAxis: { type: 'datetime', tickPixelInterval: 150, maxZoom: 20 * 1000 },
-                yAxis: {
-                    title: { text: `${dataName} ${perSecondLang}`, margin: 80 },
-                    minPadding: 0.2,
-                    maxPadding: 0.2
-                },
-                series: [{ name: `${dataName}/s`, data: [] }]
-            });
-
-            // Mô phỏng dữ liệu real-time như layer7.php và layer4.php
-            function fetchData(type) {
-                const chart = type === 0 ? layer7Chart : layer4Chart;
-                const series = chart.series[0];
-                const now = new Date().getTime();
-                const randomY = Math.floor(Math.random() * 100); // dữ liệu giả
-
-                const shift = series.data.length > 20;
-                series.addPoint([now, randomY], true, shift);
-                setTimeout(() => fetchData(type), 1000);
-            }
-        });
-    </script>
-</body>
-</html>
 
