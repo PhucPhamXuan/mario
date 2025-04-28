@@ -1,33 +1,91 @@
-﻿<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-<meta charset=utf-8 />
-<title>Mario</title>
-<link href="Content/style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phuihub Test</title>
+
+  <!-- Link manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+    }
+    .navbar {
+      display: flex;
+      background-color: #20232a;
+      padding: 10px 20px;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 5px 10px;
+      font-size: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .content {
+      padding: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        width: 100%;
+        justify-content: center;
+      }
+      .navbar {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<a href="https://fb.com/"><img src="https://www.bing.com/th?id=AMMS_928a62c96ba821e882cb080907bbb897&w=110&h=110&c=7&rs=1&qlt=95&pcl=f9f9f9&o=6&cdv=1&pid=16.1" width="40" height="39.78"></a>
-  <a>Liên hệ hợp tác</a>
-<div id="game">
-<div id="world">
-</div>
-<div id="coinNumber" class="gauge">0</div>
-<div id="coin" class="gaugeSprite"></div>
-<div id="liveNumber" class="gauge">0</div>
-<div id="live" class="gaugeSprite"></div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="Scripts/jQuery.js"><\/script>')</script>
-<script src="Scripts/testlevels.js"></script>
-<script src="Scripts/oop.js"></script>
-<script src="Scripts/keys.js"></script>
-<script src="Scripts/constants.js"></script>
-<script src="Scripts/main.js"></script>
+
+  <div class="navbar">
+    <div class="logo">Phuihub</div>
+    <nav>
+      <a href="#">Trang chủ</a>
+      <a href="#">Tin tức</a>
+      <a href="#">Video</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+  </div>
+
+  <div class="content">
+    <h1>Chào mừng đến với Phuihub!</h1>
+    <p>Đây là bản test PWA, giao diện nhẹ, thân thiện mobile + desktop.</p>
+  </div>
+
+  <!-- Đăng ký service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(function(registration) {
+        console.log('Service Worker đăng ký thành công:', registration);
+      })
+      .catch(function(error) {
+        console.log('Service Worker đăng ký thất bại:', error);
+      });
+    }
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-
