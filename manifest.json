@@ -1,0 +1,8 @@
+{
+  "name": "Phuihub Test",
+  "short_name": "Phuihub",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#20232a"
+}
